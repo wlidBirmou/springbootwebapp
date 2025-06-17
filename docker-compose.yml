@@ -1,0 +1,25 @@
+services:
+  springbootweb:
+    image: springbootweb:latest
+    ports:
+        - "8080:8080"
+    depends_on:
+      - postgresDatabase
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresDatabase:5432/springbootwebdb
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=testPassword
+
+  postgresDatabase:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresData:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=springbootwebdb
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=testPassword
+volumes:
+  postgresData:
